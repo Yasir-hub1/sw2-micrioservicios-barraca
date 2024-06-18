@@ -1,0 +1,330 @@
+type Query {
+  getEspecies: [Especie]
+  getEspecieById(id: ID!): Especie
+  getProductos: [Producto]
+  getProductoById(id: ID!): Producto
+  getRomaneos: [Romaneo]
+  getRomaneoById(id: ID!): Romaneo
+
+  getClientes: [Cliente]
+  getClienteById(id: ID!): Cliente
+  getListEnabled: [Cliente]
+  selectCustomer(name: String, nit: String): [Cliente]
+  autocompleteCustomer(search: String!): [Cliente]
+  getCiudades: [Ciudad]
+  getCiudadById(id: ID!): Ciudad
+
+  ventaList: [Venta]
+  verVentaId(id: ID!): Venta
+  getProformas: [Proforma]
+  pagosXVenta(id: ID!): PagosXVenta
+}
+
+type Mutation {
+  createEspecie(input: EspecieInput!): Especie
+  updateEspecie(input: EspecieInput!): Especie
+  createProducto(input: ProductoInput!): Producto
+  updateProducto(input: ProductoInput!): Producto
+  createRomaneo(input: RomaneoInput!): Romaneo
+  updateRomaneo(input: RomaneoInput!): Romaneo
+
+  createCliente(input: ClienteInput!): Cliente
+  updateCliente(input: ClienteInput!): Cliente
+  disableCliente(input: ClienteInput!): Cliente
+  createCiudad(input: CiudadInput!): Ciudad
+  updateCiudad(input: CiudadInput!): Ciudad
+
+  registrarVenta(input: VentaInput):Venta
+  realizarPago(input: InputPago): Pago
+  anularVenta(id:ID!):Venta
+}
+
+type PagosXVenta{
+  pagos: [Pago]
+  venta: VentaxPago
+  cliente: Cliente
+}
+
+type VentaxPago {
+    id: Int
+    fecha: String
+    total: String
+    cliente_id: ID
+}
+
+type Especie {
+  id: ID
+  codigo: String
+  nombre: String
+  precio: Float
+  descripcion: String
+}
+
+type Producto {
+  id: ID
+  codigo: String
+  espesor: Float
+  ancho: Float
+  largo: Float
+  cantidad: Int
+  cantidadPies: Float
+  estado: String
+  cantidadIngresada: Int
+  romaneoId: Int
+  especieId: Int
+}
+
+type Romaneo {
+  id: ID
+  fechaRegistro: String
+  fechaEntrega: String
+  descripcion: String
+  totalPieCuadrado: Float
+  estado: String
+  tipoRomaneo: String
+  cantidadProductos: Int
+}
+
+type Cliente {
+  id: ID
+  code: Int
+  nit: String
+  ci: String
+  complement: String
+  name: String
+  phone: String
+  address: String
+  email: String
+  state: Int
+  city_id: String
+}
+
+type Ciudad {
+  id: ID
+  name: String
+  population: Int
+}
+
+type Venta {
+  id: ID
+  tipo_venta: String
+  tipo_transaccion: String
+  fecha: String
+  a_plazos: Int
+  subtotal: Float
+  descuento: Float
+  total: Float
+  observacion_proforma: String
+  estado: Int
+  reingreso: Int
+  cliente: String
+  usuario: String
+}
+
+
+
+type DetalleVenta {
+  id: ID!
+  venta: Venta
+  espesor: Float
+  ancho: Float
+  largo: Float
+  largo_mt: Float
+  detalle: String
+  estado_inventario: String
+  cantidad: Int
+  precio_venta: Float
+  subtotal: Float
+  total_pie: Float
+  reingreso: Int
+  especie: String
+}
+type OrdenDespacho {
+  id: ID
+  nro_despacho: Int
+}
+
+type TipoIngresoEgreso {
+  id: ID
+  descripcion: String
+  tipo: String
+  estado: Int
+}
+
+type Ingreso {
+  id: ID
+  fecha: String
+  fecha_registro: String
+  concepto: String
+  monto_total: Float
+  tipo_registro: String
+  estado: Boolean
+  usuario: String
+}
+
+type NotaVenta {
+  id: ID
+  nro_nota: Int
+}
+
+type IngresoVenta {
+  id: ID
+}
+type Proforma {
+    id: ID
+    fecha: String
+    total: String
+    name: String
+    nro_proforma: Int
+}
+
+
+type Pago {
+  id:ID
+  nro_recibo: Int
+  fecha_pago: String
+  monto_total: Float
+  monto_pagado: Float
+  monto_saldo: Float
+  observacion: String
+  tipo_pago: Int
+  monto_gift_card: Float
+  numero_tarjeta: String
+}
+
+
+input EspecieInput {
+  id: ID
+  codigo: String
+  nombre: String
+  precio: Float
+  descripcion: String
+}
+
+input ProductoInput {
+  id: ID
+  codigo: String
+  espesor: Float
+  ancho: Float
+  largo: Float
+  cantidad: Int
+  cantidadPies: Float
+  estado: String
+  cantidadIngresada: Int
+  romaneoId: Int
+  especieId: Int
+}
+
+input RomaneoInput {
+  id: ID
+  fechaRegistro: String
+  fechaEntrega: String
+  descripcion: String
+  totalPieCuadrado: Float
+  estado: String
+  tipoRomaneo: String
+  cantidadProductos: Int
+}
+
+input ClienteInput {
+  id: ID
+  nit: String
+  ci: String
+  complement: String
+  name: String
+  phone: String
+  address: String
+  email: String
+  city_id: String
+}
+
+input CiudadInput {
+  name: String
+  population: Int
+}
+
+input VentaInput {
+  id: ID
+  tipo_venta: String
+  tipo_transaccion: String
+  fecha: String
+  a_plazos: Int
+  subtotal: Float
+  descuento: Float
+  total: Float
+  observacion_proforma: String
+  estado: Int
+  reingreso: Int
+  cliente: String
+  usuario: String
+}
+
+input DetalleVentaInput {
+  id: ID
+  espesor: Float
+  ancho: Float
+  largo: Float
+  largo_mt: Float
+  detalle: String
+  estado_inventario: String
+  cantidad: Int
+  precio_venta: Float
+  subtotal: Float
+  total_pie: Float
+  reingreso: Int
+  especie: String
+}
+input OrdenDespachoInput {
+  id: ID
+  nro_despacho: Int
+}
+
+input TipoIngresoEgresoInput {
+  id: ID
+  descripcion: String
+  tipo: String
+  estado: Int
+}
+
+input IngresoInput {
+  id: ID
+  fecha: String
+  fecha_registro: String
+  concepto: String
+  monto_total: Float
+  tipo_registro: String
+  estado: Boolean
+  usuario: String
+}
+
+input NotaVentaInput {
+  id: ID
+  nro_nota: Int
+}
+
+input IngresoVentaInput {
+  id: ID
+}
+input ProformaInput {
+  id: ID
+  nro_proforma: Int
+  puesto_obra: String
+  tipo_cambio: String!
+  condiciones_entrega: String
+  tiempo_entrega: String
+  forma_entrega: String
+  forma_pago: String
+  nombre_dirigido: String
+}
+input InputPago {
+  id: ID
+  nro_recibo: Int
+  fecha_pago: String
+  monto_total: Float
+  monto_pagado: Float
+  monto_saldo: Float
+  observacion: String
+  tipo_pago: Int
+  monto_gift_card: Float
+  numero_tarjeta: String
+}

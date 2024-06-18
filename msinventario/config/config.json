@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "yasir",
+    "password": "yasir270620",
+    "database": "msinventarioDB",
+    "host": "34.45.195.57",
+    "dialect": "postgres"
+  }
+}

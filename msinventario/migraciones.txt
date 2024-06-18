@@ -1,0 +1,6 @@
+npx sequelize-cli model:generate --name Especie --attributes codigo:string,nombre:string,precio:float,descripcion:string
+npx sequelize-cli model:generate --name Romaneo --attributes fecha_registro:DATE,fecha_entrega:DATE,descripcion:STRING,total_pie_cuadrado:FLOAT,estado:STRING,tipo_romaneo:STRING,cantidad_productos:INTEGER
+npx sequelize-cli model:generate --name DetalleRomaneo --attributes ancho_total:FLOAT,pie_total:FLOAT,espesor_largo:STRING,lista_anchos:STRING,cantidad:INTEGER,romaneoId:INTEGER,especieId:INTEGER,productoId:INTEGER
+npx sequelize-cli model:generate --name Producto --attributes codigo:STRING,espesor:FLOAT,ancho:FLOAT,largo:FLOAT,cantidad:INTEGER,cantidad_pies:FLOAT,estado:STRING,cantidad_ingresada:INTEGER,romaneoId:INTEGER,especieId:INTEGER
+npx sequelize-cli db:migrate
+npx sequelize-cli db:migrate:undo:all
